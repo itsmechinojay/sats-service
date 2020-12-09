@@ -1,4 +1,4 @@
-package com.accenture.satsservice.exception;
+package com.accenture.satsservice.server.exception;
 
 public class AttendanceException extends RuntimeException {
 

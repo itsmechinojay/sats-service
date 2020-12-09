@@ -1,8 +1,8 @@
-package com.accenture.satsservice.response;
+package com.accenture.satsservice.server.response;
 
 import java.time.LocalDateTime;
 
-import com.accenture.satsservice.exception.AttendanceException;
+import com.accenture.satsservice.server.exception.AttendanceException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +22,13 @@ public class ErrorResponseHandler {
         ErrorResponse error = new ErrorResponse();
 
         error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setError(ex.toString());
+        if (("Learner not yet timed-in".equals(exc.getMessage()))) {
+            error.setError("Not Found");
+        } else {
+            error.setError("Conflict");
+        }
         error.setMessage(exc.getMessage());
         error.setTimestamp(LocalDateTime.now());
-
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 

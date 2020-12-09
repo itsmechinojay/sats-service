@@ -1,4 +1,4 @@
-package com.accenture.satsservice.entity;
+package com.accenture.satsservice.server.entity;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +10,6 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Data
 @AllArgsConstructor
@@ -25,6 +24,5 @@ public class Learner {
     private String eid;
     private LocalDateTime timeIn;
     private LocalDateTime timeOut;
-
 
 }

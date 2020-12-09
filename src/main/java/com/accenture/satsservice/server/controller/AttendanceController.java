@@ -1,9 +1,9 @@
-package com.accenture.satsservice.controller;
+package com.accenture.satsservice.server.controller;
 
 import java.util.List;
 
-import com.accenture.satsservice.entity.Learner;
-import com.accenture.satsservice.service.AttendanceService;
+import com.accenture.satsservice.server.entity.Learner;
+import com.accenture.satsservice.server.service.AttendanceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

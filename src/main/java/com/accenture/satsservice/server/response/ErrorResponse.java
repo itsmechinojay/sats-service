@@ -1,4 +1,4 @@
-package com.accenture.satsservice.response;
+package com.accenture.satsservice.server.response;
 
 import java.time.LocalDateTime;
 

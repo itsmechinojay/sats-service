@@ -1,11 +1,11 @@
-package com.accenture.satsservice.service;
+package com.accenture.satsservice.server.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.accenture.satsservice.entity.Learner;
-import com.accenture.satsservice.exception.AttendanceException;
-import com.accenture.satsservice.repository.LearnerRepository;
+import com.accenture.satsservice.server.entity.Learner;
+import com.accenture.satsservice.server.exception.AttendanceException;
+import com.accenture.satsservice.server.repository.LearnerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,25 +18,30 @@ public class AttendanceService {
 
     public Learner timeIn(Learner learner) {
         Learner existingLearner = learnerRepository.findByEid(learner.getEid());
-        if (existingLearner.getTimeIn() == null) {
-            existingLearner.setTimeIn(LocalDateTime.now());
-            return learnerRepository.save(existingLearner);
+        if (existingLearner == null) {
+            Learner newLearner = new Learner();
+            newLearner.setEid(learner.getEid());
+            newLearner.setTimeIn(LocalDateTime.now());
+            learnerRepository.save(newLearner);
+            existingLearner = newLearner;
+            return existingLearner;
         } else {
-            throw new AttendanceException("Learner already timed-out");
+            throw new AttendanceException("Learner already timed-in");
         }
     }
 
     public Learner timeOut(Learner learner) {
         Learner existingLearner = learnerRepository.findByEid(learner.getEid());
-        if (existingLearner.getTimeOut() == null) {
-            if (existingLearner.getTimeIn() == null) {
-                throw new AttendanceException("Learner not yet timed-in");
-            } else {
+
+        if (existingLearner == null) {
+            throw new AttendanceException("Learner not yet timed-in");
+        } else {
+            if (existingLearner.getTimeOut() == null) {
                 existingLearner.setTimeOut(LocalDateTime.now());
                 return learnerRepository.save(existingLearner);
+            } else {
+                throw new AttendanceException("Learner already timed-out");
             }
-        } else {
-            throw new AttendanceException("Learner already timed-out");
         }
     }
 
